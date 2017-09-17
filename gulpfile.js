@@ -27,7 +27,7 @@ var path = {
         js: ['src/js/*.js', '!src/js/partials/**/*.js'],
         style: 'src/style/*.scss',
         img: 'src/img/**/*.*',
-        fonts: ['src/fonts/**/*.*', ]
+        fonts: 'src/fonts/**/*.*'
     },
     watch: {
         html: 'src/**/*.html',
