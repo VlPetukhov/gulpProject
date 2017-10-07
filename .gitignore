@@ -2,3 +2,8 @@
 bower_components
 node_modules
 build/*
+
+lib
+spec/jasmine_examples
+spec/helpers/jasmine_examples
+spec/support/jasmine.json

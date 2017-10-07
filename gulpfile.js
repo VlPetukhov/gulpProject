@@ -26,6 +26,11 @@ var path = {
         html: ['src/*.html', '!src/template/**/*.html'],
         js: ['src/js/*.js', '!src/js/partials/**/*.js'],
         style: 'src/style/*.scss',
+        styleAsIs: [
+            './node_modules/purecss/build/pure-min.css',
+            './node_modules/purecss/build/grids-responsive-min.css',
+            './node_modules/purecss/build/grids-responsive-old-ie-min.css'
+        ],
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
@@ -90,6 +95,15 @@ gulp.task(
     }
 );
 
+gulp.task(
+    'styleAsIs:build',
+    function () {
+        gulp.src(path.src.styleAsIs)
+            .pipe(sourceMap.init())
+            .pipe(gulp.dest(path.build.css))
+    }
+);
+
 gulp.task('image:build', function () {
     gulp.src(path.src.img) //Выберем наши картинки
         .pipe(imagemin({ //Сожмем их
@@ -113,6 +127,7 @@ gulp.task(
         'html:build',
         'js:build',
         'style:build',
+        'styleAsIs:build',
         'fonts:build',
         'image:build'
     ]
