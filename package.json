@@ -26,6 +26,8 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "mithril": "^1.1.4",
-    "purecss": "^1.0.0"
+    "purecss": "^1.0.0",
+    "store": "^2.0.12",
+    "translate-js": "^1.0.1"
   }
 }
