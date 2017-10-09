@@ -6,4 +6,4 @@ build/*
 lib
 spec/jasmine_examples
 spec/helpers/jasmine_examples
-spec/support/jasmine.json
+npm-debug.log
