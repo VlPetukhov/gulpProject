@@ -28,6 +28,6 @@
     "mithril": "^1.1.4",
     "purecss": "^1.0.0",
     "store": "^2.0.12",
-    "translate-js": "^1.0.1"
+    "translate.js": "git+ssh://git@github.com/musterknabe/translate.js.git"
   }
 }
