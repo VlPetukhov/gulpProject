@@ -1,5 +1,6 @@
 // /src/js/components/storage.js
 
+
 var StateDomain = {
     state: {},
     listeners: [],
@@ -35,7 +36,7 @@ var StateManager = {
         }
 
         var path = StateDomain.toPath(field);
-        var notFound = {notFound: true};
+        var notFound = {};
         var result = notFound;
 
         if (StateDomain.state.hasOwnProperty(path[0])) {
@@ -69,7 +70,8 @@ var StateManager = {
         }
 
         var path = StateDomain.toPath(field);
-        var result = undefined;
+        var notFound = {};
+        var result = notFound;
 
         if (StateDomain.state.hasOwnProperty(path[0])) {
             result = StateDomain.state[path[0]];
