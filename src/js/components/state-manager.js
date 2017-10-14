@@ -14,6 +14,18 @@ StateManager.prototype.initState = function (initialState) {
     this.state = JSON.parse(JSON.stringify(initialState)) || {};
     this.listeners = [];
 };
+
+StateManager.prototype.initDefaultPersistents = function (defaults) {
+    var props = defaults || {};
+
+    for (var property in props) {
+        if (props.hasOwnProperty(property) && this.isValidPath(property)) {
+            if (undefined === this.getPersist(property)) {
+                this.setPersist(property, defaults[property]);
+            }
+        }
+    }
+};
 StateManager.prototype.clearPersist = function () {
     this.persistentStore.clearAll();
     this.persistenListeners = [];

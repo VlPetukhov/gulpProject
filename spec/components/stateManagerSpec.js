@@ -669,4 +669,68 @@ describe('StateManager', function () {
         expect(listener.c).not.toHaveBeenCalled();
 
     });
+
+    it("should be able set default persistent values if they was not set", function () {
+        var init = {
+            'a': 0,
+            'b.b.b': "test",
+            'c': {aa: 1, bb: true}
+        };
+
+        state.setPersistNamespace('test');
+        state.clearPersist();
+        state.initDefaultPersistents(init);
+
+        _.forOwn(
+            init,
+            function (value, key) {
+                expect(state.getPersist(key)).toEqual(value);
+
+                if (_.isObject(value) && !_.isArray(value)) {
+                    //not the same object
+                    expect(state.getPersist(key)).not.toBe(value);
+                } else if (_.isArray(value)) {
+                    //not the same array
+                    expect(state.getPersist(key)).not.toBe(value);
+                } else {
+                    expect(state.getPersist(key)).toBe(value);
+                }
+
+            }
+        );
+    });
+
+    it("should be able skip default persistent values if they already was set", function () {
+        var setValues = {
+            'a': 10,
+            'b.b.b': 'already was set'
+        };
+
+        var init = {
+            'a': 0,
+            'a2': 1,
+            'b.b.b': "test",
+            'c': {aa: 1, bb: true}
+        };
+
+        state.setPersistNamespace('test');
+        state.clearPersist();
+        //preset values
+        state.initDefaultPersistents(setValues);
+
+        state.initDefaultPersistents(init);
+
+        _.forOwn(
+            init,
+            function (value, key) {
+                if (setValues.hasOwnProperty(key)) {
+                    expect(state.getPersist(key)).toEqual(setValues[key]);
+                    expect(state.getPersist(key)).not.toEqual(value);
+                } else {
+                    expect(state.getPersist(key)).toEqual(value);
+                }
+
+            }
+        );
+    });
 });
