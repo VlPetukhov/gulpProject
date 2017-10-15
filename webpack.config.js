@@ -31,6 +31,14 @@ module.exports = {
     module: {
         loaders: [
             {
+                test: /\.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /(node_modules)/,
+                options: {
+                    presets: ['es2015']
+                }
+            },
+            {
                 test: /\.less$/i,
                 use: extractCSS.extract({
                     fallback: "style-loader",

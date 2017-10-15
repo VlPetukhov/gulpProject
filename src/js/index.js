@@ -5,4 +5,4 @@ var Application = require('./components/application');
 
 var initState = window.__initState || {};
 var defaultPersistents = window.__defaultPersistents || {};
-eSlovoApp = window.eSlovoApp || new Application(initState, defaultPersistents);
+window.eSlovoApp = window.eSlovoApp || new Application(initState, defaultPersistents);
