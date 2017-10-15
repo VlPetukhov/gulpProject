@@ -1,27 +1,30 @@
-var StateManager = require('./components/storage'); //simple state manager
-var Translator = require('./components/translations'); //translation function
+var StateManager = require('./state-manager'); //simple state manager
+// var Translator = require('./translations'); //translation function
 
 
-Application = function (initState) {
-    this.init(initState);
+function Application (initState) {
     this.components = {};
-};
+    this.init(initState);
+    console.log('construct');
+}
 Application.prototype = Object.create({});
 Application.prototype.constructor = Application;
 
 Application.prototype.init = function (initState, defaultPersistents) {
     //components
-    var stateManager =  Object.create(StateManager);
+    var stateManager =  new StateManager();
     stateManager.initState(initState);
     stateManager.initDefaultPersistents(defaultPersistents);
     this.components.stateManager = stateManager;
 
 
     //translations
-    this.components.t = Object.create(
-        Translator,
-        {
-            stateManager: this.components.stateManager
-        }
-    ).translate;
+    // this.components.t = Object.create(
+    //     Translator,
+    //     {
+    //         stateManager: this.components.stateManager
+    //     }
+    // ).translate;
 };
+
+module.exports = Application;
