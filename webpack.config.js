@@ -20,6 +20,7 @@ module.exports = {
         vendor: [
             'mithril',
             'store',
+            'translate.js',
             './node_modules/purecss/build/pure-min.css',
         ],
     },

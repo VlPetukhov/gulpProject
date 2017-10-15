@@ -1,5 +1,8 @@
-var StateManager = require('./state-manager'); //simple state manager
-// var Translator = require('./translations'); //translation function
+const StateManager = require('./state-manager'); //simple state manager
+const Locale = require('./locale');
+const Translator = require('./translator');
+
+// const Translator = require('./translations'); //translation function
 
 
 function Application (initState) {
@@ -12,19 +15,22 @@ Application.prototype.constructor = Application;
 
 Application.prototype.init = function (initState, defaultPersistents) {
     //components
-    var stateManager =  new StateManager();
+    let stateManager =  new StateManager();
     stateManager.initState(initState);
     stateManager.initDefaultPersistents(defaultPersistents);
+    stateManager.setPersist(
+        Locale.LOCALE_NAME,
+        Locale.DEFAULT_LOCALE
+    );
     this.components.stateManager = stateManager;
 
+    //locale
+    this.components.locale = Object.create(Locale);
 
     //translations
-    // this.components.t = Object.create(
-    //     Translator,
-    //     {
-    //         stateManager: this.components.stateManager
-    //     }
-    // ).translate;
+    let translator = new Translator(this.components.stateManager);
+    translator.setFetchUrl('#');
+    this.components.translator = translator;
 };
 
 module.exports = Application;

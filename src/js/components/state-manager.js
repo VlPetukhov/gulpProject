@@ -1,3 +1,6 @@
+/**
+ * This class was written with ES5.1 syntax intentionally
+ */
 var store = require('store');
 
 function StateManager (persistentStorage) {
