@@ -8,7 +8,7 @@
     "webpack": "webpack --hide-modules",
     "dev": "cross-env NODE_ENV=development webpack --hide-modules --watch",
     "devserv": "cross-env NODE_ENV=development webpack-dev-server --content-base distr/ --open --inline --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack -p --progress --hide-modules"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",

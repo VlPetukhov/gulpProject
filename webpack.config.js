@@ -1,15 +1,15 @@
-var webpack = require('webpack');
-var path = require('path');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var extractCSS = new ExtractTextPlugin('css/[name].css');
+const webpack = require('webpack');
+const path = require('path');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractCSS = new ExtractTextPlugin('css/[name].css');
 
 module.exports = {
     entry:{
         app: [
-            './src/js/index.js',
+            './src/app/index.js',
             './src/index.html',
-            './src/favicon.ico'
+            './src/assets/favicon.ico'
         ],
         preload: [
             './node_modules/purecss/build/grids-responsive-min.css',
@@ -34,7 +34,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
-                exclude: /(node_modules)/,
+                exclude: /(node_modules)|(bower_components)/,
                 options: {
                     presets: ['es2015']
                 }

@@ -6,12 +6,14 @@ const Resources = require('./resources');
 // const Translator = require('./translations'); //translation function
 
 class Application {
-  constructor (initState) {
+  constructor(initState) {
     console.log('construct');
     this.components = {};
     console.log('init...');
     this.init(initState);
     console.log('...done');
+    this.envDev = process.env.NODE_ENV !== 'production';
+    console.log(process, this.envDev);
   }
 
   init(initState, defaultPersistents) {
@@ -33,8 +35,14 @@ class Application {
         (locale) => {
           let target = this.components.translator.currentMessagesSource;
 
-          Resources.getMessages(locale).then((response) => {
+          Resources.getMessages(locale)
+          .then((response) => {
             this.components.stateManager.set(target, response);
+          })
+          .catch((err) => {
+            if (this.envDev) {
+              console.log('Message fetchong error', err);
+            }
           });
 
         },
