@@ -1,36 +1,49 @@
 const StateManager = require('./state-manager'); //simple state manager
 const Locale = require('./locale');
 const Translator = require('./translator');
+const Resources = require('./resources');
 
 // const Translator = require('./translations'); //translation function
 
-
-function Application (initState) {
-    this.components = {};
-    this.init(initState);
+class Application {
+  constructor (initState) {
     console.log('construct');
-}
-Application.prototype = Object.create({});
-Application.prototype.constructor = Application;
+    this.components = {};
+    console.log('init...');
+    this.init(initState);
+    console.log('...done');
+  }
 
-Application.prototype.init = function (initState, defaultPersistents) {
+  init(initState, defaultPersistents) {
     //components
-    let stateManager =  new StateManager();
+    let stateManager = new StateManager();
     stateManager.initState(initState);
     stateManager.initDefaultPersistents(defaultPersistents);
-    stateManager.setPersist(
-        Locale.LOCALE_NAME,
-        Locale.DEFAULT_LOCALE
-    );
     this.components.stateManager = stateManager;
 
     //locale
-    this.components.locale = Object.create(Locale);
+    this.components.locale = new Locale(this.components.stateManager);
 
     //translations
-    let translator = new Translator(this.components.stateManager);
-    translator.setFetchUrl('#');
-    this.components.translator = translator;
-};
+    this.components.translator = new Translator(this.components.stateManager);
+
+    //binding
+    console.log(this.components.locale);
+    this.components.locale.addListener(
+        (locale) => {
+          let target = this.components.translator.currentMessagesSource;
+
+          Resources.getMessages(locale).then((response) => {
+            this.components.stateManager.set(target, response);
+          });
+
+        },
+    );
+
+    //test @ToDo remove
+    this.components.locale.setLocale('ru_RU');
+  }
+
+}
 
 module.exports = Application;

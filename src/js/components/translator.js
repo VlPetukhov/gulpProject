@@ -1,41 +1,54 @@
 const m = require('mithril');
 const translateJs = require('translate.js');
-const Locale = require('./locale');
+
+
+const MESSAGES_NAME = 'MESSAGES';
 
 class Translator {
   constructor (stateManager) {
-    if (!stateManager.getPersist(Locale.LOCALE_NAME)) {
-      stateManager.setPersist(Locale.LOCALE_NAME, Locale.DEFAULT_LOCALE);
-    }
+    this.__stateManager = stateManager;
 
     this.initTranslateFunction = function () {
         this.__translate = translateJs(this.messages, this.options);
     };
 
-    this.fetchUrl = null;
-    this.unsubscribe = stateManager.addPersistListener(Locale.LOCALE_NAME, this.fetchMessages);
+    this.init();
+
+    this.unsubscribe = stateManager.addListener(
+        MESSAGES_NAME,
+        this.setMessages
+    );
+  }
+
+  init () {
+    if (undefined === this.__stateManager.get(MESSAGES_NAME)) {
+      this.__stateManager.set(MESSAGES_NAME, {}); //empty message set
+    }
+
+    this.currentMessagesSource = MESSAGES_NAME;
 
     this.options = {
-        debug: false,
-        namespaceSplitter: '.'
+      debug: false,
+      namespaceSplitter: '.'
     };
-    this.messages = {};
 
-    this.fetchMessages();
+    this.messages = this.__stateManager.get(MESSAGES_NAME);
   }
 
-  fetchMessages() {
-    console.log('Fetching messages...');
-    if (null === this.fetchUrl) {
-      console.log('...no URL');
-      return;
+  static get MESSAGES_NAME () {
+    return MESSAGES_NAME;
+  }
+
+  listenTo(newTarget) {
+    if (this.unsubscribe && typeof this.unsubscribe === 'function') {
+      this.unsubscribe();
     }
-    console.log('... Ok');
-  }
 
-  setFetchUrl(url) {
-    this.fetchUrl = url;
-    this.fetchMessages();
+    this.currentMessagesSource = newTarget;
+    this.unsubscribe = this.__stateManager.addListener(
+          newTarget,
+          this.setMessages
+    );
   }
 
   setOptions (options) {
