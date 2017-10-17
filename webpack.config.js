@@ -8,8 +8,8 @@ module.exports = {
     entry:{
         app: [
             './src/app/index.js',
-            './src/index.html',
-            './src/assets/favicon.ico'
+            './src/app/index.html',
+            './src/app/assets/favicon.ico'
         ],
         preload: [
             './node_modules/purecss/build/grids-responsive-min.css',

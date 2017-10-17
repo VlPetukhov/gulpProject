@@ -3,17 +3,11 @@ const Locale = require('./locale');
 const Translator = require('./translator');
 const Resources = require('./resources');
 
-// const Translator = require('./translations'); //translation function
-
 class Application {
   constructor(initState) {
-    console.log('construct');
     this.components = {};
-    console.log('init...');
     this.init(initState);
-    console.log('...done');
     this.envDev = process.env.NODE_ENV !== 'production';
-    console.log(process, this.envDev);
   }
 
   init(initState, defaultPersistents) {
@@ -29,8 +23,7 @@ class Application {
     //translations
     this.components.translator = new Translator(this.components.stateManager);
 
-    //binding
-    console.log(this.components.locale);
+    //binding locale setting to fetching new translations
     this.components.locale.addListener(
         (locale) => {
           let target = this.components.translator.currentMessagesSource;

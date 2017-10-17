@@ -36,10 +36,12 @@
     "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "lodash": "^4.17.4",
     "mithril": "^1.1.4",
     "purecss": "^1.0.0",
     "store": "^2.0.12",
-    "translate.js": "git+ssh://git@github.com/musterknabe/translate.js.git"
+    "translate.js": "git+ssh://git@github.com/musterknabe/translate.js.git",
+    "w3c-xmlhttprequest": "^2.1.2"
   }
 }
